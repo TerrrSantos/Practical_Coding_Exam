@@ -39,3 +39,29 @@ app.listen(3000,()=>
         console.log("Server is up");
     }
 )
+
+//Gets all of the items in the inventory
+app.get("/inventory", (req, res)=>
+    {
+        connection.query('Select * from inventory', (error, rows,fields)=>
+            {
+                if (error) throw error;
+                res.end(JSON.stringify(rows));
+                console.log("All items are fetched")
+            }
+        )
+    }
+)
+
+//Gets a single item in the inventory
+app.get("/inventory/:id", (req,res)=>
+    {
+        connection.query('Select * from inventory where id = ?', [req.params.id], (error, rows, fields)=>
+            {
+                if (err) throw err;
+                res.end(JSON.stringify(rows));
+                console.log("The item " + req.params.id + " is fetched")
+            }
+        )
+    }
+)
