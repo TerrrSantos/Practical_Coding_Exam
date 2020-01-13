@@ -65,3 +65,45 @@ app.get("/inventory/:id", (req,res)=>
         )
     }
 )
+
+//Creates a new record into the inventory (Not finished)
+app.post("/toadd", (req,res)=>
+    {
+        let add = {
+            "items": req.body.items,
+            "name": req.body.name,
+            "quantity": req.body.quantity,
+            "amount": req.body.amount
+        }
+        connection.query('INSERT INTO inventory SET ?',add, (error, rows, fields)=>
+            {
+                if(err) throw err;
+                res.end(JSON.stringify(rows));
+            }
+        );
+    }
+)
+
+//Updates the record in the inventory (Not finished)
+app.put("/inventory", function(req,res)
+    {
+        connection.query('UPDATE inventory SET ?', {}, (error, rows, fields)=>
+            {
+                if(err) throw err;
+                res.end(JSON.stringify(rows));
+            }
+        )
+    }
+)
+
+//Deletes a record in the inventory (Not finished)
+app.delete("/inventory", function(req,res)
+    {
+        connection.query('DELETE FROM `inventory` WHERE `ID`=?`',[], (error, rows, fields)=>
+            {
+                if(err) throw err;
+                res.end('Record is deleted');
+            }
+        )
+    }
+)
